@@ -114,7 +114,22 @@ def get_slides():
     return {"total_slides": len(structured_slides), "slides": structured_slides}
 
 
+@app.get("/download/database")
+def download_database():
+    """Direct download for the 10.42 MB verified provenance SQLite database."""
+    db_path = ROOT_DIR / "data" / "processed" / "global_risk_database.db"
+    if not db_path.exists():
+        raise HTTPException(status_code=404, detail="Provenance database not found")
+    
+    return FileResponse(
+        path=str(db_path),
+        filename="global_risk_database.db",
+        media_type="application/x-sqlite3"
+    )
+
+
 @app.get("/download/pdf")
+@app.head("/download/pdf")
 def download_pdf():
     """Direct download for the 2.95 MB compiled dissertation PDF."""
     pdf_path = THESIS_DIR / "DISSERTATION_MONOGRAPH.pdf"
@@ -129,6 +144,7 @@ def download_pdf():
 
 
 @app.get("/monograph", response_class=HTMLResponse)
+@app.head("/monograph")
 def view_monograph():
     """Serves the standalone HTML monograph."""
     html_path = THESIS_DIR / "DISSERTATION_MONOGRAPH.html"
@@ -140,6 +156,7 @@ def view_monograph():
 
 
 @app.get("/", response_class=HTMLResponse)
+@app.head("/")
 def index():
     """Serves the main research portal."""
     index_file = STATIC_DIR / "index.html"
@@ -148,3 +165,4 @@ def index():
     
     with open(index_file, "r", encoding="utf-8") as f:
         return f.read()
+
