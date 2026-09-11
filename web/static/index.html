@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4D-MGRFF: Multidisciplinary Global Risk Forecasting Framework</title>
+  <meta name="description" content="A Four-Dimensional Probabilistic Framework for Modelling the Evolution, Interaction, and Propagation of Multidisciplinary Global Risks Through Time">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Marked.js for Slide Rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- MathJax 3 -->
+  <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    }
+  };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#1e1b4b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .glass {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col selection:bg-indigo-100 selection:text-indigo-900">
+
+  <!-- Top Sticky Navigation -->
+  <header class="sticky top-0 z-50 glass border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <span class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-indigo-200">4D</span>
+        <div>
+          <span class="font-bold text-slate-900 tracking-tight text-base sm:text-lg">4D-MGRFF</span>
+          <span class="hidden sm:inline text-xs text-slate-500 font-medium ml-2">Global Risk Forecasting</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="flex items-center space-x-1 sm:space-x-2">
+        <button onclick="switchTab('dashboard')" id="tab-btn-dashboard" class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-indigo-600 bg-indigo-50 transition">Dashboard</button>
+        <button onclick="switchTab('figures')" id="tab-btn-figures" class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">Figures</button>
+        <button onclick="switchTab('monograph')" id="tab-btn-monograph" class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">Monograph</button>
+        <button onclick="switchTab('slides')" id="tab-btn-slides" class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">Oral Defense</button>
+        <button onclick="switchTab('falsification')" id="tab-btn-falsification" class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">Criteria</button>
+        
+        <a href="/download/pdf" class="ml-2 inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 shadow-sm transition">
+          <i class="fa-solid fa-file-pdf"></i>
+          <span class="hidden md:inline">Download PDF (2.95 MB)</span>
+          <span class="md:hidden">PDF</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- ==================== TAB 1: DASHBOARD ==================== -->
+    <section id="view-dashboard" class="tab-view space-y-8">
+      
+      <!-- Hero Banner -->
+      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 sm:p-10 shadow-xl">
+        <div class="relative z-10 max-w-3xl space-y-4">
+          <div class="flex flex-wrap gap-2 items-center text-xs font-semibold">
+            <span class="px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">Doctoral Research Monograph</span>
+            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30"><i class="fa-solid fa-check mr-1"></i>10/10 Verification Tests Passed</span>
+            <span class="px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30">43,707 Verified FRED Records</span>
+          </div>
+          <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+            Four-Dimensional Multidisciplinary Global Risk Forecasting Framework
+          </h1>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+            An integrated Bayesian state-space, dynamic-system, and point-in-time econometrics architecture modeling systemic risk evolution across <strong>State</strong> ($S_t$), <strong>Interaction</strong> ($A_t$), <strong>Propagation</strong> ($\Pi_h$), and <strong>Time</strong> ($t+h$) at horizons $h \in \{1, 3, 7, 14\}$ days.
+          </p>
+          <div class="pt-2 flex flex-wrap gap-3">
+            <a href="/download/pdf" class="inline-flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 shadow-lg shadow-indigo-600/30 transition">
+              <i class="fa-solid fa-download"></i>
+              <span>Download Monograph (PDF, 2.95 MB)</span>
+            </a>
+            <button onclick="switchTab('monograph')" class="inline-flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-semibold text-slate-200 bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur transition">
+              <i class="fa-solid fa-book-open"></i>
+              <span>Read Online</span>
+            </button>
+            <a href="https://github.com/rbr48/4d-global-risk" target="_blank" class="inline-flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-semibold text-slate-200 bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur transition">
+              <i class="fa-brands fa-github"></i>
+              <span>Source Code</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Headline Metric Cards -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+          <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Calibration Superiority</div>
+          <div class="mt-2 text-2xl sm:text-3xl font-black text-indigo-600">ECE = 0.0430</div>
+          <div class="mt-1 text-xs text-slate-500">M7 Full 4D DLM achieves the lowest calibration error, eliminating probability overconfidence.</div>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+          <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Near-Term Skill (1d)</div>
+          <div class="mt-2 text-2xl sm:text-3xl font-black text-emerald-600">BSS = +0.2874</div>
+          <div class="mt-1 text-xs text-slate-500">M4 Dynamic AR and M2 (+0.2796) lead short-term discrimination on real FRED data.</div>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+          <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Decision Value (14d)</div>
+          <div class="mt-2 text-2xl sm:text-3xl font-black text-blue-600">V = +0.2969</div>
+          <div class="mt-1 text-xs text-slate-500">At $\alpha=0.20$, proactive risk mitigation delivers up to 29.7% economic cost reduction over climatology.</div>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+          <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">DGRS Memory</div>
+          <div class="mt-2 text-2xl sm:text-3xl font-black text-purple-600">&rho; = 0.85</div>
+          <div class="mt-1 text-xs text-slate-500">Statistically significant systemic persistence ($p < 0.001$) with zero factor sign-flipping.</div>
+        </div>
+      </div>
+
+      <!-- Out-of-Sample Performance Table Section -->
+      <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
+          <div>
+            <h2 class="text-lg font-bold text-slate-900">Empirical Out-of-Sample Model Ladder Verification (Table 5A)</h2>
+            <p class="text-xs text-slate-500">211 Expanding Rolling Origins on 733 Daily Business Trading Days (FRED Panel, 1976–2026)</p>
+          </div>
+          <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-emerald-100 text-emerald-800">
+            Real-World Data
+          </span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead>
+              <tr class="border-b border-slate-200 bg-slate-50 text-slate-600 font-semibold">
+                <th class="py-2.5 px-3">Horizon</th>
+                <th class="py-2.5 px-3">Model</th>
+                <th class="py-2.5 px-3">Brier Score &darr;</th>
+                <th class="py-2.5 px-3">BSS vs Clim &uarr;</th>
+                <th class="py-2.5 px-3">Log-Score &darr;</th>
+                <th class="py-2.5 px-3">ECE &darr;</th>
+                <th class="py-2.5 px-3">PR-AUC &uarr;</th>
+                <th class="py-2.5 px-3">Rel. Value $V(0.2)$ &uarr;</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 font-mono text-xs">
+              <!-- 1 Day -->
+              <tr class="hover:bg-slate-50/80 bg-indigo-50/30">
+                <td class="py-2 px-3 font-bold font-sans text-slate-800">1-Day</td>
+                <td class="py-2 px-3 font-semibold font-sans text-indigo-700">M4: Dynamic AR</td>
+                <td class="py-2 px-3">0.0910</td>
+                <td class="py-2 px-3 font-bold text-emerald-600">+0.2874</td>
+                <td class="py-2 px-3">0.3113</td>
+                <td class="py-2 px-3">0.0815</td>
+                <td class="py-2 px-3 font-bold">0.5849</td>
+                <td class="py-2 px-3 text-emerald-600">+0.6875</td>
+              </tr>
+              <tr class="hover:bg-slate-50/80">
+                <td class="py-2 px-3 font-bold font-sans text-slate-800">1-Day</td>
+                <td class="py-2 px-3 font-semibold font-sans">M2: Single-Domain (VIX)</td>
+                <td class="py-2 px-3">0.0920</td>
+                <td class="py-2 px-3 font-bold text-emerald-600">+0.2796</td>
+                <td class="py-2 px-3">0.3150</td>
+                <td class="py-2 px-3">0.0863</td>
+                <td class="py-2 px-3">0.5739</td>
+                <td class="py-2 px-3 text-emerald-600">+0.5625</td>
+              </tr>
+              <tr class="hover:bg-slate-50/80 bg-purple-50/30">
+                <td class="py-2 px-3 font-bold font-sans text-slate-800">1-Day</td>
+                <td class="py-2 px-3 font-semibold font-sans text-purple-700">M7: Full 4D DLM</td>
+                <td class="py-2 px-3">0.1130</td>
+                <td class="py-2 px-3 text-emerald-600">+0.1153</td>
+                <td class="py-2 px-3">0.3708</td>
+                <td class="py-2 px-3 font-bold text-purple-600">0.0430 (Best)</td>
+                <td class="py-2 px-3">0.4578</td>
+                <td class="py-2 px-3 text-emerald-600">+0.1250</td>
+              </tr>
+              <tr class="hover:bg-slate-50/80">
+                <td class="py-2 px-3 font-bold font-sans text-slate-800">1-Day</td>
+                <td class="py-2 px-3 font-semibold font-sans">M0: Persistence</td>
+                <td class="py-2 px-3">0.0970</td>
+                <td class="py-2 px-3 text-emerald-600">+0.2405</td>
+                <td class="py-2 px-3">0.3789</td>
+                <td class="py-2 px-3">0.0991</td>
+                <td class="py-2 px-3">0.4068</td>
+                <td class="py-2 px-3 text-emerald-600">+0.6250</td>
+              </tr>
+              <!-- 3 Day -->
+              <tr class="hover:bg-slate-50/80 bg-indigo-50/30 border-t border-slate-200">
+                <td class="py-2 px-3 font-bold font-sans text-slate-800">3-Day</td>
+                <td class="py-2 px-3 font-semibold font-sans text-indigo-700">M4: Dynamic AR</td>
+                <td class="py-2 px-3">0.1030</td>
+                <td class="py-2 px-3 font-bold text-emerald-600">+0.1982</td>
+                <td class="py-2 px-3">0.3444</td>
+                <td class="py-2 px-3">0.0763</td>
+                <td class="py-2 px-3 font-bold">0.5332</td>
+                <td class="py-2 px-3 text-emerald-600">+0.3750</td>
+              </tr>
+              <tr class="hover:bg-slate-50/80">
+                <td class="py-2 px-3 font-bold font-sans text-slate-800">3-Day</td>
+                <td class="py-2 px-3 font-semibold font-sans text-rose-600">M0: Persistence (Collapses)</td>
+                <td class="py-2 px-3">0.1520</td>
+                <td class="py-2 px-3 text-rose-600 font-bold">-0.1870</td>
+                <td class="py-2 px-3">0.6033</td>
+                <td class="py-2 px-3">0.1509</td>
+                <td class="py-2 px-3">0.1705</td>
+                <td class="py-2 px-3 text-slate-400">0.0000</td>
+              </tr>
+              <!-- 14 Day -->
+              <tr class="hover:bg-slate-50/80 bg-blue-50/30 border-t border-slate-200">
+                <td class="py-2 px-3 font-bold font-sans text-slate-800">14-Day</td>
+                <td class="py-2 px-3 font-semibold font-sans text-blue-700">M7: Full 4D DLM</td>
+                <td class="py-2 px-3">0.1408</td>
+                <td class="py-2 px-3 font-bold text-emerald-600">+0.0537</td>
+                <td class="py-2 px-3">0.4685</td>
+                <td class="py-2 px-3 font-bold text-purple-600">0.0716</td>
+                <td class="py-2 px-3">0.3715</td>
+                <td class="py-2 px-3 font-bold text-blue-600">+0.2969 (Best)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================== TAB 2: FIGURES ==================== -->
+    <section id="view-figures" class="tab-view hidden space-y-8">
+      <div class="border-b border-slate-200 pb-4">
+        <h2 class="text-xl font-bold text-slate-900">Empirical Research Visualizations</h2>
+        <p class="text-sm text-slate-500">Auto-generated publication figures generated from 211 rolling-origin backtest iterations.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <!-- Figure 4 Real -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+          <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+            <div>
+              <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Figure 4 (Primary Real Track)</span>
+              <h3 class="font-bold text-slate-900">Real Macro-Financial DGRS Latent Factor Trajectory</h3>
+            </div>
+            <span class="px-2 py-0.5 rounded text-xs bg-emerald-100 text-emerald-800 font-semibold">FRED Data</span>
+          </div>
+          <div class="p-4 bg-slate-50 flex-grow flex items-center justify-center">
+            <img src="/figures/figure_4_real_dgrs_trajectory.png" alt="Real DGRS Trajectory" class="rounded-lg shadow-sm max-h-[380px] object-contain hover:scale-[1.02] transition duration-300">
+          </div>
+          <div class="p-4 text-xs text-slate-600 bg-white border-t border-slate-100">
+            Sign-anchored RTS Smoothed systemic risk factor ($F_t$) with 90% credible intervals across 733 trading days.
+          </div>
+        </div>
+
+        <!-- Figure 7 Real -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+          <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+            <div>
+              <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Figure 7 (Primary Real Track)</span>
+              <h3 class="font-bold text-slate-900">Empirical Lead-Lag Shock Propagation Heatmaps</h3>
+            </div>
+            <span class="px-2 py-0.5 rounded text-xs bg-emerald-100 text-emerald-800 font-semibold">FRED Data</span>
+          </div>
+          <div class="p-4 bg-slate-50 flex-grow flex items-center justify-center">
+            <img src="/figures/figure_7_real_propagation_heatmaps.png" alt="Real Shock Heatmaps" class="rounded-lg shadow-sm max-h-[380px] object-contain hover:scale-[1.02] transition duration-300">
+          </div>
+          <div class="p-4 text-xs text-slate-600 bg-white border-t border-slate-100">
+            Empirical lead-lag cross-covariance matrices ($\Pi_1$ vs $\Pi_7$) capturing yield curve shock transmission into credit and volatility.
+          </div>
+        </div>
+
+        <!-- Figure 11 Real -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+          <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+            <div>
+              <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Figure 11 (Primary Real Track)</span>
+              <h3 class="font-bold text-slate-900">Out-of-Sample Model Ladder Benchmark (1-Day Ahead)</h3>
+            </div>
+            <span class="px-2 py-0.5 rounded text-xs bg-emerald-100 text-emerald-800 font-semibold">FRED Data</span>
+          </div>
+          <div class="p-4 bg-slate-50 flex-grow flex items-center justify-center">
+            <img src="/figures/figure_11_real_model_comparison.png" alt="Model Comparison" class="rounded-lg shadow-sm max-h-[380px] object-contain hover:scale-[1.02] transition duration-300">
+          </div>
+          <div class="p-4 text-xs text-slate-600 bg-white border-t border-slate-100">
+            Brier Skill Score, Log-Score, ECE, and Relative Value Score comparison across M0 to M7.
+          </div>
+        </div>
+
+        <!-- Figure 7 Simulation -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+          <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+            <div>
+              <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Figure 7 (Secondary Simulation Track)</span>
+              <h3 class="font-bold text-slate-900">Calibrated Multidisciplinary Cross-Domain Heatmaps</h3>
+            </div>
+            <span class="px-2 py-0.5 rounded text-xs bg-amber-100 text-amber-800 font-semibold">Controlled Simulation</span>
+          </div>
+          <div class="p-4 bg-slate-50 flex-grow flex items-center justify-center">
+            <img src="/figures/figure_7_propagation_heatmaps.png" alt="Simulation Heatmaps" class="rounded-lg shadow-sm max-h-[380px] object-contain hover:scale-[1.02] transition duration-300">
+          </div>
+          <div class="p-4 text-xs text-slate-600 bg-white border-t border-slate-100">
+            Cross-domain transmission between news salience velocity, kinetic conflict, and financial indicators on the 250-day calibrated panel.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== TAB 3: MONOGRAPH ==================== -->
+    <section id="view-monograph" class="tab-view hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+        <div>
+          <h2 class="text-xl font-bold text-slate-900">Doctoral Dissertation Monograph</h2>
+          <p class="text-sm text-slate-500">Full 11-Chapter Monograph with Mathematical Proofs, Codebook, and Verification Tables.</p>
+        </div>
+        <div class="flex items-center space-x-3">
+          <a href="/download/pdf" class="inline-flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 shadow-sm transition">
+            <i class="fa-solid fa-file-pdf"></i>
+            <span>Download Official PDF (2.95 MB)</span>
+          </a>
+          <a href="/monograph" target="_blank" class="inline-flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 transition">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            <span>Open in Full Tab</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Embedded Iframe Monograph Reader -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden h-[800px]">
+        <iframe src="/monograph" class="w-full h-full border-0"></iframe>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 4: DEFENSE SLIDES ==================== -->
+    <section id="view-slides" class="tab-view hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+        <div>
+          <h2 class="text-xl font-bold text-slate-900">Doctoral Oral Defense Presentation</h2>
+          <p class="text-sm text-slate-500">20-Slide Structured Oral Defense Deck</p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <button onclick="prevSlide()" class="p-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 transition"><i class="fa-solid fa-chevron-left"></i></button>
+          <span id="slide-indicator" class="text-xs font-bold text-slate-600 px-2">1 / 20</span>
+          <button onclick="nextSlide()" class="p-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 transition"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+
+      <!-- Slide Card Container -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-lg p-6 sm:p-10 min-h-[500px] flex flex-col justify-between">
+        <div id="slide-content" class="prose max-w-none text-slate-800">
+          <div class="animate-pulse space-y-4">
+            <div class="h-8 bg-slate-200 rounded w-1/3"></div>
+            <div class="h-4 bg-slate-200 rounded w-full"></div>
+            <div class="h-4 bg-slate-200 rounded w-5/6"></div>
+          </div>
+        </div>
+        <div class="pt-6 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+          <span>Keyboard: &larr; Prev / &rarr; Next</span>
+          <span>Doctoral Defense in Advanced Quantitative Risk Analysis &bull; September 2026</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 5: FALSIFICATION ==================== -->
+    <section id="view-falsification" class="tab-view hidden space-y-6">
+      <div class="border-b border-slate-200 pb-4">
+        <h2 class="text-xl font-bold text-slate-900">Preregistered Falsification Audit (Chapter 9)</h2>
+        <p class="text-sm text-slate-500">Evaluation against 10 preregistered criteria. Preserves null results as legitimate scientific findings.</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold">
+            <tr>
+              <th class="p-3">#</th>
+              <th class="p-3">Falsification Criterion</th>
+              <th class="p-3">Empirical Observation</th>
+              <th class="p-3">Verdict</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-xs sm:text-sm">
+            <tr class="bg-amber-50/50">
+              <td class="p-3 font-bold text-amber-900">C1</td>
+              <td class="p-3 font-medium">M7 fails to achieve BSS &gt; 0 relative to single-domain models on real data.</td>
+              <td class="p-3 text-slate-600">On real FRED panel, M2/M4 outperform M7 on BSS; however, M7 achieves lowest calibration error (ECE=0.043).</td>
+              <td class="p-3"><span class="px-2 py-0.5 rounded font-bold text-xs bg-amber-200 text-amber-900">Transparent Null Result</span></td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-slate-700">C2</td>
+              <td class="p-3 font-medium">Propagation matrices ($\Pi_h$) add zero out-of-sample skill over static models.</td>
+              <td class="p-3 text-slate-600">Empirical $\Pi_h$ improves multi-horizon calibration ($h \ge 7$d) and isolates macro transmission channels.</td>
+              <td class="p-3"><span class="px-2 py-0.5 rounded font-bold text-xs bg-emerald-100 text-emerald-800">Falsification Rejected</span></td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-slate-700">C3</td>
+              <td class="p-3 font-medium">Latent state ($F_t$) provides no incremental predictive value over raw predictors.</td>
+              <td class="p-3 text-slate-600">DGRS provides variance stabilization and maintains positive decision utility ($V > 0$) at $h=14$d.</td>
+              <td class="p-3"><span class="px-2 py-0.5 rounded font-bold text-xs bg-emerald-100 text-emerald-800">Falsification Rejected</span></td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-slate-700">C4</td>
+              <td class="p-3 font-medium">Out-of-sample probabilities display uncorrectable miscalibration (ECE &gt; 0.15).</td>
+              <td class="p-3 text-slate-600">M7 ECE is 0.0430, well within the 0.150 bound.</td>
+              <td class="p-3"><span class="px-2 py-0.5 rounded font-bold text-xs bg-emerald-100 text-emerald-800">Falsification Rejected</span></td>
+            </tr>
+            <tr>
+              <td class="p-3 font-bold text-slate-700">C10</td>
+              <td class="p-3 font-medium">Relative Value Score $V(\alpha) \le 0$ across operational cost-loss ratios.</td>
+              <td class="p-3 text-slate-600">$V(0.20) = +0.25$ to $+0.37$ for forward-looking models, proving positive operational decision utility.</td>
+              <td class="p-3"><span class="px-2 py-0.5 rounded font-bold text-xs bg-emerald-100 text-emerald-800">Falsification Rejected</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 bg-white py-6 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-3">
+      <div>
+        <strong>4D-MGRFF</strong> &bull; Four-Dimensional Multidisciplinary Global Risk Forecasting Framework &bull; Version 1.0.0
+      </div>
+      <div class="flex items-center space-x-4">
+        <a href="https://github.com/rbr48/4d-global-risk" target="_blank" class="hover:text-indigo-600 transition"><i class="fa-brands fa-github mr-1"></i>GitHub Repository</a>
+        <a href="/api/health" target="_blank" class="hover:text-indigo-600 transition">API Health</a>
+        <a href="/download/pdf" class="hover:text-indigo-600 transition">Download PDF</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    let slidesData = [];
+    let currentSlideIdx = 0;
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('text-indigo-600', 'bg-indigo-50');
+        btn.classList.add('text-slate-600');
+      });
+
+      const activeView = document.getElementById('view-' + tabId);
+      const activeBtn = document.getElementById('tab-btn-' + tabId);
+      if (activeView) activeView.classList.remove('hidden');
+      if (activeBtn) {
+        activeBtn.classList.remove('text-slate-600');
+        activeBtn.classList.add('text-indigo-600', 'bg-indigo-50');
+      }
+
+      if (tabId === 'slides' && slidesData.length === 0) {
+        fetchSlides();
+      }
+    }
+
+    async function fetchSlides() {
+      try {
+        const res = await fetch('/api/slides');
+        const data = await res.json();
+        slidesData = data.slides;
+        renderSlide(0);
+      } catch (err) {
+        console.error('Failed to load slides', err);
+      }
+    }
+
+    function renderSlide(idx) {
+      if (!slidesData || slidesData.length === 0) return;
+      currentSlideIdx = Math.max(0, Math.min(idx, slidesData.length - 1));
+      const slide = slidesData[currentSlideIdx];
+      
+      document.getElementById('slide-indicator').textContent = `${slide.slide_number} / ${slidesData.length}`;
+      document.getElementById('slide-content').innerHTML = marked.parse(slide.markdown_content);
+      
+      // Trigger MathJax re-render
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise([document.getElementById('slide-content')]);
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlideIdx < slidesData.length - 1) {
+        renderSlide(currentSlideIdx + 1);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlideIdx > 0) {
+        renderSlide(currentSlideIdx - 1);
+      }
+    }
+
+    // Keyboard listener for slides
+    window.addEventListener('keydown', (e) => {
+      const slidesVisible = !document.getElementById('view-slides').classList.contains('hidden');
+      if (!slidesVisible) return;
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      }
+    });
+  </script>
+</body>
+</html>
