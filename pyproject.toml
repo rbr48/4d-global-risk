@@ -8,6 +8,7 @@ version = "1.0.0"
 description = "Four-Dimensional Probabilistic Framework for Modelling the Evolution, Interaction, and Propagation of Multidisciplinary Global Risks"
 authors = [{ name = "Izhaan Intellect Research" }]
 readme = "README.md"
+license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [
     "numpy>=1.26.0",
