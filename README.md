@@ -113,7 +113,7 @@ An integrated Bayesian, Dynamic State-Space, and Probabilistic Forecasting archi
 
 ```bash
 # Clone repository
-git clone https://github.com/your-org/4d-global-risk.git
+git clone https://github.com/rbr48/4d-global-risk.git
 cd 4d-global-risk
 
 # Install in editable mode with development dependencies
