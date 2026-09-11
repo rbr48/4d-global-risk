@@ -10,7 +10,6 @@ import sqlite3
 from typing import List, Optional
 import pandas as pd
 
-
 PROVENANCE_SCHEMA_SQLITE = """
 CREATE TABLE IF NOT EXISTS global_risk_provenance (
     observation_id TEXT PRIMARY KEY,
@@ -75,40 +74,42 @@ class PointInTimeDatabase:
         cursor = self.conn.cursor()
         data = []
         for r in records:
-            data.append((
-                r.observation_id,
-                r.event_time.isoformat(),
-                r.publication_time.isoformat(),
-                r.first_available_timestamp.isoformat(),
-                r.revision_timestamp.isoformat() if r.revision_timestamp else None,
-                r.source,
-                r.source_version,
-                r.domain,
-                r.country,
-                r.region,
-                r.indicator,
-                r.raw_value,
-                r.transformed_value,
-                r.unit,
-                r.transformation,
-                1 if r.missing_flag else 0,
-                1 if r.revision_flag else 0
-            ))
-        cursor.executemany("""
+            data.append(
+                (
+                    r.observation_id,
+                    r.event_time.isoformat(),
+                    r.publication_time.isoformat(),
+                    r.first_available_timestamp.isoformat(),
+                    r.revision_timestamp.isoformat() if r.revision_timestamp else None,
+                    r.source,
+                    r.source_version,
+                    r.domain,
+                    r.country,
+                    r.region,
+                    r.indicator,
+                    r.raw_value,
+                    r.transformed_value,
+                    r.unit,
+                    r.transformation,
+                    1 if r.missing_flag else 0,
+                    1 if r.revision_flag else 0,
+                )
+            )
+        cursor.executemany(
+            """
             INSERT OR REPLACE INTO global_risk_provenance (
                 observation_id, event_time, publication_time, first_available_timestamp,
                 revision_timestamp, source, source_version, domain, country, region,
                 indicator, raw_value, transformed_value, unit, transformation,
                 missing_flag, revision_flag
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, data)
+        """,
+            data,
+        )
         self.conn.commit()
 
     def get_eligible_slice(
-        self,
-        forecast_origin: datetime,
-        start_date: Optional[datetime] = None,
-        domains: Optional[List[str]] = None
+        self, forecast_origin: datetime, start_date: Optional[datetime] = None, domains: Optional[List[str]] = None
     ) -> pd.DataFrame:
         """
         Extract data strictly available prior to or at forecast origin t.
@@ -116,7 +117,7 @@ class PointInTimeDatabase:
         """
         origin_iso = forecast_origin.isoformat()
         query = """
-            SELECT 
+            SELECT
                 observation_id,
                 event_time,
                 first_available_timestamp,

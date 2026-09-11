@@ -37,7 +37,7 @@ jobs:
 
       - name: Run static analysis (Flake8)
         run: |
-          python -m flake8 models/ src/ tests/ --max-line-length 120 --ignore E501,W503
+          python -m flake8 models/ src/ tests/ --max-line-length 120 --ignore E501,W503,E203
 
       - name: Execute test suite (Pytest)
         run: |

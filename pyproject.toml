@@ -39,3 +39,16 @@ dev = [
     "black>=24.0.0",
     "flake8>=7.0.0"
 ]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["models*", "src*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.black]
+line-length = 120
+target-version = ["py311", "py312"]
+

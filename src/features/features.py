@@ -3,49 +3,39 @@
 Strictly origin-safe transformations, salience normalization, and rolling volatility.
 """
 
-from typing import Dict, Optional, Tuple
+from typing import Dict, Tuple
 import numpy as np
 import pandas as pd
 
 
 def compute_salience_normalized_velocity(
-    event_counts: pd.Series,
-    total_articles: pd.Series,
-    window_length: int = 14,
-    epsilon: float = 1e-6
+    event_counts: pd.Series, total_articles: pd.Series, window_length: int = 14, epsilon: float = 1e-6
 ) -> pd.Series:
     """
     Computes Robust Salience-Normalized Information Velocity (§11.1).
     Avoids media scraper expansion and wire syndication artifacts.
-    
+
     Salience_t = N_{d,t} / TotalGlobalArticles_t
     IV_t = (Salience_t - median(Salience_{t-L:t-1})) / (MAD(Salience_{t-L:t-1}) + eps)
     """
     # Relative event salience
     salience = event_counts / (total_articles + epsilon)
-    
+
     # Trailing window median & MAD strictly over past observations
     rolling_median = salience.shift(1).rolling(window=window_length, min_periods=3).median()
-    
+
     def calc_mad(window_vals):
         med = np.median(window_vals)
         return np.median(np.abs(window_vals - med))
-    
-    rolling_mad = (
-        salience.shift(1)
-        .rolling(window=window_length, min_periods=3)
-        .apply(calc_mad, raw=True)
-    )
-    
+
+    rolling_mad = salience.shift(1).rolling(window=window_length, min_periods=3).apply(calc_mad, raw=True)
+
     # 1.4826 normal consistency constant for MAD
     normalized_velocity = (salience - rolling_median) / (1.4826 * rolling_mad + epsilon)
     return normalized_velocity.fillna(0.0)
 
 
-def compute_rolling_volatility(
-    prices: pd.Series,
-    window_length: int = 7
-) -> pd.Series:
+def compute_rolling_volatility(prices: pd.Series, window_length: int = 7) -> pd.Series:
     """
     Computes rolling standard deviation of log returns strictly over trailing window.
     r_t = 100 * ln(P_t / P_{t-1})
@@ -90,8 +80,7 @@ class OriginSafeStandardizer:
 
 
 def compute_shock_indicators(
-    standardized_df: pd.DataFrame,
-    threshold_percentile: float = 90.0
+    standardized_df: pd.DataFrame, threshold_percentile: float = 90.0
 ) -> Tuple[pd.DataFrame, Dict[str, float]]:
     """
     Constructs binary shock indicators Shock_{d,t} = I(Z_{d,t} > c_d).
@@ -99,10 +88,10 @@ def compute_shock_indicators(
     """
     shock_df = pd.DataFrame(index=standardized_df.index)
     thresholds = {}
-    
+
     for col in standardized_df.columns:
         c_d = float(np.percentile(standardized_df[col].dropna(), threshold_percentile))
         thresholds[col] = c_d
         shock_df[f"{col}_shock"] = (standardized_df[col] >= c_d).astype(int)
-        
+
     return shock_df, thresholds

@@ -4,7 +4,6 @@ M0: Persistence Baseline (hat p_{t+h} = Y_t)
 M1: Climatology / Unconditional Base Rate (hat p = bar Y_{train})
 """
 
-from typing import Optional
 import numpy as np
 import pandas as pd
 

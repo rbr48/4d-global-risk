@@ -3,12 +3,13 @@
 Gradient Boosted Decision Tree (GBDT) with LightGBM or self-contained Boosting Ensemble.
 """
 
-from typing import List, Optional
+from typing import List
 import numpy as np
 import pandas as pd
 
 try:
     import lightgbm as lgb
+
     HAS_LIGHTGBM = True
 except ImportError:
     HAS_LIGHTGBM = False
@@ -30,7 +31,7 @@ class DecisionStump:
     def fit(self, X: np.ndarray, residuals: np.ndarray):
         n_samples, n_features = X.shape
         best_loss = float("inf")
-        
+
         # Grid search over feature quantiles
         for feat in range(n_features):
             vals = X[:, feat]
@@ -76,10 +77,10 @@ class NonlinearGBDTModel:
         self.feature_names = list(X_train.columns)
         X = X_train.values
         y = np.asarray(y_train, dtype=float)
-        
+
         base_rate = np.clip(np.mean(y), 0.01, 0.99)
         self.base_log_odds = float(np.log(base_rate / (1.0 - base_rate)))
-        
+
         if HAS_LIGHTGBM and len(X) >= 20:
             try:
                 self.lgb_model = lgb.LGBMClassifier(
@@ -88,17 +89,17 @@ class NonlinearGBDTModel:
                     max_depth=3,
                     num_leaves=7,
                     min_child_samples=5,
-                    verbose=-1
+                    verbose=-1,
                 )
                 self.lgb_model.fit(X, y)
                 return self
             except Exception:
                 self.lgb_model = None  # Fallback to internal boosting
-                
+
         # Self-contained gradient boosting
         current_pred = np.full(len(X), self.base_log_odds)
         self.stumps = []
-        
+
         for _ in range(self.n_estimators):
             p = _sigmoid(current_pred)
             pseudo_res = y - p  # negative gradient of log-loss
@@ -107,7 +108,7 @@ class NonlinearGBDTModel:
             update = stump.predict(X)
             current_pred += self.learning_rate * update
             self.stumps.append(stump)
-            
+
         return self
 
     def predict_proba(self, X_test: pd.DataFrame, horizon: int = 1) -> np.ndarray:
@@ -118,7 +119,7 @@ class NonlinearGBDTModel:
                 return np.clip(probs, 0.001, 0.999)
             except Exception:
                 pass
-                
+
         pred = np.full(len(X), self.base_log_odds)
         for stump in self.stumps:
             pred += self.learning_rate * stump.predict(X)
