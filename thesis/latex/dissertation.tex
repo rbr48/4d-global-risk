@@ -1,0 +1,89 @@
+\documentclass[12pt,oneside,a4paper]{report}
+
+% Essential Mathematical & Formatting Packages
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage{xcolor}
+
+\onehalfspacing
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    citecolor=blue!70!black,
+    urlcolor=blue!70!black
+}
+
+\title{
+    \vspace{-1.5in}
+    \Huge \textbf{A Four-Dimensional Probabilistic Framework for Modelling the Evolution, Interaction, and Propagation of Multidisciplinary Global Risks Through Time} \\
+    \vspace{0.8in}
+    \large \textit{A Dissertation Submitted in Partial Fulfillment of the Requirements for the Degree of Doctor of Philosophy in Advanced Quantitative Risk Analysis and Econometrics} \\
+    \vspace{0.8in}
+}
+\author{\textbf{Doctoral Researcher in Advanced Quantitative Risk Analysis}}
+\date{September 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Global risks rarely occur as isolated events. Geopolitical shocks can affect energy markets; energy shocks can affect inflation expectations and financial conditions; credit tightness can alter political stability and policy choices; digital information velocity can amplify perceived uncertainty; and environmental stress can exacerbate localized vulnerabilities. 
+
+This dissertation develops and empirically evaluates the \textbf{4D Multidisciplinary Global Risk Forecasting Framework (4D-MGRFF)}. The framework conceptualizes global risk across four structural dimensions: \textbf{State} ($S_t$), \textbf{Interaction} ($A_t$), \textbf{Propagation} ($\Pi_h$), and \textbf{Time} ($t+h$). The empirical architecture assembles a versioned, point-in-time timestamped panel combining high-frequency media data (GDELT), political violence telemetry (ACLED), financial and commodity benchmarks, market-implied high-frequency macroeconomic proxies, policy signals, and observational climate indicators.
+
+To guarantee computational tractability and empirical rigor across $\sim$3,650 daily rolling origins, the methodology introduces a \textbf{Two-Tier Inference Protocol}: daily rolling estimation uses analytical Dynamic Linear Models (Kalman Filter and Fixed-Interval Smoother), while quarterly checkpoint origins undergo full Bayesian MCMC with hierarchical shrinkage priors. Latent factor states are identified via strict sign constraints ($\lambda_{\text{stress}} > 0$) to eliminate rolling polarity inversions.
+
+Evaluation uses strictly proper scoring rules (Brier Score, Brier Skill Score against climatology, Logarithmic Score, and CRPS), Precision-Recall AUC for rare multi-domain escalation events ($S_3$), reliability curves, Expected Calibration Error (ECE), and a decision-theoretic Relative Value Score ($V$). The dissertation enforces explicit preregistered falsification criteria, ensuring that null results are preserved as valid scientific findings.
+\end{abstract}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+% Notation Glossary
+\chapter*{Mathematical Notation}
+\begin{tabularx}{\textwidth}{lX}
+\toprule
+\textbf{Symbol} & \textbf{Description} \\
+\midrule
+$S_t \in \mathbb{R}^D$ & Latent multidisciplinary global-risk state vector across $D=5$ domains \\
+$F_t \in \mathbb{R}$ & Dynamic Global Risk State (DGRS) scalar common systemic factor \\
+$X_t \in \mathbb{R}^p$ & Vector of observed high-frequency domain indicators \\
+$A_t \in \mathbb{R}^{D \times D}$ & Time-varying cross-domain dynamic interaction matrix \\
+$\Pi_h \in \mathbb{R}^{p \times p}$ & Horizon-specific dynamic shock propagation matrix ($h \in \{1, 3, 7, 14\}$) \\
+$\mathcal{I}_t$ & Point-in-time information set available at forecast origin $t$ \\
+$\lambda_{\text{stress}} > 0$ & Strict sign-identification anchor on factor loadings \\
+$\widetilde{IV}_{d,t}$ & Salience-normalized robust information velocity \\
+$\text{BSS}$ & Brier Skill Score relative to unconditional climatology \\
+$V(\alpha)$ & Richardson / Murphy-Winkler Relative Decision Value under cost-loss ratio $\alpha$ \\
+\bottomrule
+\end{tabularx}
+
+% Chapters are included via child documents or master manuscript text
+\input{../thesis/chapter_01_introduction.md}
+\input{../thesis/chapter_02_literature_review.md}
+\input{../thesis/chapter_03_theoretical_framework.md}
+\input{../thesis/chapter_04_data_and_measurement.md}
+\input{../thesis/chapter_05_methodology.md}
+\input{../thesis/chapter_06_empirical_results.md}
+\input{../thesis/chapter_07_propagation_analysis.md}
+\input{../thesis/chapter_08_scenario_dynamics.md}
+\input{../thesis/chapter_09_robustness_and_falsification.md}
+\input{../thesis/chapter_10_discussion_and_policy_utility.md}
+\input{../thesis/chapter_11_conclusion.md}
+
+\appendix
+\input{../thesis/appendix_a_mathematical_proofs.md}
+\input{../thesis/appendix_b_data_codebook.md}
+
+\end{document}

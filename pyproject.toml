@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "four_d_global_risk"
+version = "1.0.0"
+description = "Four-Dimensional Probabilistic Framework for Modelling the Evolution, Interaction, and Propagation of Multidisciplinary Global Risks"
+authors = [{ name = "Izhaan Intellect Research" }]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26.0",
+    "scipy>=1.12.0",
+    "pandas>=2.2.0",
+    "pyarrow>=15.0.0",
+    "statsmodels>=0.14.0",
+    "scikit-learn>=1.4.0",
+    "lightgbm>=4.3.0",
+    "matplotlib>=3.8.0",
+    "seaborn>=0.13.0"
+]
+
+[project.optional-dependencies]
+# The point-in-time acquisition layer (src/acquisition/schema.py) runs on the
+# stdlib sqlite3 backend by default. DuckDB is an optional accelerated
+# backend for larger-than-memory provenance tables and is not required to
+# run any current pipeline, model, or test in this repository.
+duckdb = [
+    "duckdb>=0.10.0"
+]
+bayesian = [
+    "pymc>=5.10.0",
+    "arviz>=0.17.0",
+    "pytensor>=2.18.0"
+]
+dev = [
+    "pytest>=8.0.0",
+    "black>=24.0.0",
+    "flake8>=7.0.0"
+]
