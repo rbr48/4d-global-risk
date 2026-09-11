@@ -38,7 +38,7 @@ The dissertation formalizes global risk as a dynamic multidimensional system acr
 
 **Specific Objectives**:
 1. **Data Architecture**: Construct a point-in-time relational data pipeline enforcing zero lookahead leakage ($I_t = \{x : \text{first\_available}(x) \le t\}$).
-2. **Identification & Computation**: Establish a sign-anchored state-space formulation ($\lambda_{\text{stress}} > 0$) and a computationally tractable **Two-Tier Inference Protocol** (daily analytical Kalman RTS smoother + quarterly checkpoint Bayesian MCMC).
+2. **Identification & Computation**: Establish a sign-anchored state-space formulation ($\lambda_{\text{stress}} > 0$) and a computationally tractable **Two-Tier Inference Protocol** architecture (daily analytical Kalman RTS smoother for empirical evaluation, coupled with a quarterly checkpoint Bayesian MCMC specification for production validation).
 3. **Model Benchmark Ladder**: Implement and evaluate an escalating benchmark ladder: M0 (Persistence), M1 (Climatology), M2 (Single-Domain), M3 (ElasticNet), M4 (Dynamic AR), M5 (LightGBM), and M7 (Full 4D Model).
 4. **Proper Scoring Verification**: Evaluate forecasts using strictly proper scoring rules (Brier Score, Brier Skill Score against climatology, Logarithmic Score) and Precision-Recall AUC for rare crisis events.
 5. **Decision Utility**: Operationalize the Richardson / Murphy-Winkler Relative Value Score ($V(\alpha)$) to quantify real-world economic risk-mitigation value under varying cost-loss ratios.

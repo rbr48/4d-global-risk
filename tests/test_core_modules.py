@@ -26,7 +26,7 @@ from src.evaluation.scoring import (
 
 
 def test_zero_leakage_enforcement():
-    """Verify DuckDB point-in-time schema enforces I_t = {x: availability <= t}."""
+    """Verify point-in-time schema enforces I_t = {x: availability <= t}."""
     db = PointInTimeDatabase(":memory:")
     t_origin = datetime(2026, 6, 1, 12, 0, 0)
     
